@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="restcrudhibernate.entities.Player" table="player" schema="steam">
+        <id name="steamid" type ="java.lang.Long">
+            <column name="STEAMID" sql-type="bigint(20)"/>
+        </id>
+        <property name="nickname">
+            <column name="NICKNAME" sql-type="varchar(128)" length="128"/>
+        </property>
+        <property name="vacBanned">
+            <column name="VACBANNED" sql-type="bit(1)"/>
+        </property>
+        <property name="accountValue">
+            <column name="ACCOUNTVALUE" sql-type="double" precision="-1"/>
+        </property>
+        <set name="playerGames" table="playersgames" inverse="false" lazy="true" cascade="none" batch-size="0">
+            <key>
+                <column name="STEAMID" not-null="true" />
+            </key>
+            <many-to-many entity-name="restcrudhibernate.entities.Game">
+                <column name="APPID" not-null="true" />
+            </many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>
